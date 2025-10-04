@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--& ======================================= Meta Tags ======================================= -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta
+      name="description"
+      content="A simple Bookmark Manager web app built with HTML, CSS, and JavaScript. It allows users to save their favorite websites with names and links, validate input data, and store bookmarks in the browser’s localStorage. Users can visit or delete saved bookmarks easily through a clean and responsive interface."
+    />
+    <meta
+      name="keywords"
+      content="Bookmark web app, HTML, CSS, JavaScript, Bookmark Manager, Save bookmarks, Validate input data, Browser localStorage, Clean and responsive interface, Visit or delete saved bookmarks easily"
+    />
+    <meta name="author" content="Abdelwahab Abdelsalam" />
+    <title>Bookmark-Manager</title>
+    <!--& ======================================= CSS Links ======================================= -->
+    <link rel="stylesheet" href="./CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="./CSS/all.min.css" />
+    <link rel="stylesheet" href="./CSS/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="./CSS/style.css" />
+  </head>
+  <body>
+    <!--& ======================================== Container ======================================== -->
+    <div class="container py-3">
+      <!--* ======================================== Title ======================================== -->
+      <div class="title text-center m-0">
+        <h1 class="main-title py-5">Bookmarker</h1>
+      </div>
+
+      <!--* ======================================== Input Form ======================================== -->
+      <div class="input-form">
+        <div class="text-center">
+          <h2 class="subtitle pt-2 mt-3">
+            <i class="fa fa-bookmark"></i>
+            Bookmark <span class="gradient-text">your favorite sites</span>
+            <span><i class="fa fa-bookmark"></i></span>
+          </h2>
+        </div>
+
+        <div class="search-input pb-4 pt-3">
+          <label class="mb-2 fw-semibold" for="siteName">
+            <i class="fa-solid fa-book-bookmark pe-2"></i>
+            <span>Site Name</span>
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="siteName"
+            oninput="validateSiteNameInput(this)"
+            placeholder="Bookmark Name"
+          />
+        </div>
+
+        <div class="search-input pb-3">
+          <label class="mb-2 fw-semibold" for="siteUrl">
+            <i class="fa-solid fa-link pe-2"></i>
+            <span>Site URL</span>
+          </label>
+          <input
+            type="url"
+            class="form-control"
+            id="siteUrl"
+            oninput="validateSiteUrlInput(this)"
+            placeholder="Website URL"
+          />
+        </div>
+
+        <button
+          id="submitBtn"
+          onclick="addBookmark()"
+          class="btn btn-submit px-5 my-btn d-block mx-auto mt-2 mb-4 text-white"
+        >
+          Submit
+        </button>
+      </div>
+
+      <!--* ======================================== Bookmarks Table ======================================== -->
+      <table class="table mt-4 text-center bg-light">
+        <thead>
+          <tr>
+            <th class="text-capitalize">Index</th>
+            <th class="text-capitalize">Website Name</th>
+            <th class="text-capitalize">Visit</th>
+            <th class="text-capitalize">Delete</th>
+          </tr>
+        </thead>
+        <tbody id="bookmarkTable"></tbody>
+      </table>
+
+      <!--* ======================================== Error Box ======================================== -->
+      <div
+        id="errorBox"
+        class="position-fixed top-50 start-50 translate-middle d-none"
+      >
+        <div class="box-conent bg-white p-4 rounded-2 shadow-lg">
+          <header
+            class="box-header w-100 d-flex justify-content-between align-items-center mb-4"
+          >
+            <div class="circles d-flex">
+              <span class="rounded-circle me-2 bg-danger"></span>
+              <span class="rounded-circle me-2 bg-warning"></span>
+              <span class="rounded-circle me-2 bg-success"></span>
+            </div>
+            <button id="closeBtn" class="btn border-0" onclick="hideErrorBox()">
+              <i class="fa-solid fa-xmark close fs-3"></i>
+            </button>
+          </header>
+
+          <p class="m-0 pb-2">
+            Site Name or Url is not valid, Please follow the rules below :
+          </p>
+          <ul class="rules list-unstyled m-0">
+            <li>
+              <i class="fa-regular fa-circle-right p-2 me-3"></i>
+              Site name must contain at least 3 characters
+            </li>
+            <li>
+              <i class="fa-regular fa-circle-right p-2 me-3"></i>
+              Site URL must be a valid one
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script src="./JS/bootstrap.bundle.min.js"></script>
+    <script src="./JS/main.js"></script>
+  </body>
+</html>
