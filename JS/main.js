@@ -69,6 +69,15 @@ function addBookmark() {
   localStorage.setItem("bookmarks", JSON.stringify(bookmarkList));
   //^------------------> Display Bookmark <------------------*//
   displayBookmarks();
+  //^------------------> Show Success Alert <------------------*//
+    Swal.fire({
+      title: "Added Successfully!",
+      text: "Your bookmark has been saved.",
+      icon: "success",
+      confirmButtonColor: "#4db748",
+      timer: 2000,
+      showConfirmButton: false,
+    });
   //^------------------> Reset Inputs <------------------*//
   resetInputs();
 }
