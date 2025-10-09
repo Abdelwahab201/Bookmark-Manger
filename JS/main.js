@@ -21,10 +21,26 @@ function showErrorBox() {
 function hideErrorBox() {
   errorBox.classList.add("d-none");
 }
-//*------------------> Validate URL <------------------*//
-function isValidUrl(url) {
-  var urlPattern = /^https:\/\/www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
-  return urlPattern.test(url);
+//*------------------> Validation Rules <------------------*//
+var validationRules = {
+  name: {
+    regex: /^[A-Z][a-z]{2,}(?: [A-Z][a-z]{2,})*$/,
+  },
+  url: {
+    regex: /^https:\/\/www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/,
+  },
+};
+//*------------------> Generic Validation Function <------------------*//
+function validateInput(inputElement, rule) {
+  var value = inputElement.value.trim();
+  if (!rule.regex.test(value)) {
+    inputElement.classList.add("is-invalid");
+    inputElement.classList.remove("is-valid");
+    return false;
+  }
+  inputElement.classList.add("is-valid");
+  inputElement.classList.remove("is-invalid");
+  return true;
 }
 //*------------------> Reset Inputs <------------------*//
 function resetInputs() {
@@ -35,25 +51,18 @@ function resetInputs() {
 }
 //*------------------> Add Bookmark <------------------*//
 function addBookmark() {
+    var isNameValid = validateInput(siteNameInput, validationRules.name);
+    var isUrlValid = validateInput(siteUrlInput, validationRules.url);
+
+    if (!isNameValid || !isUrlValid) {
+      showErrorBox();
+      return;
+    }
+  //^------------------> Create Bookmark Object <------------------*//
   var bookmark = {
     name: siteNameInput.value.trim(),
     url: siteUrlInput.value.trim(),
   };
-  //^------------------> Validate Inputs <------------------*//
-  if (!bookmark.name || !bookmark.url) {
-    showErrorBox();
-    return;
-  }
-  //^------------------> Validate Bookmark Name <------------------*//
-  if (bookmark.name.length < 3) {
-    showErrorBox();
-    return;
-  }
-  //^------------------> Validate URL Format <------------------*//
-  if (!isValidUrl(bookmark.url)) {
-    showErrorBox();
-    return;
-  }
   //^------------------> Add Bookmark to Array <------------------*//
   bookmarkList.push(bookmark);
   //^------------------> Save to localStorage <------------------*//
@@ -94,24 +103,10 @@ function deleteBookmark(index) {
   localStorage.setItem("bookmarks", JSON.stringify(bookmarkList));
   displayBookmarks();
 }
-//*------------------> Validate Site Name <------------------*//
-function validateSiteNameInput(inputElement) {
-  if (inputElement.value.trim().length < 3) {
-    inputElement.classList.add("is-invalid");
-    inputElement.classList.remove("is-valid");
-  } else {
-    inputElement.classList.add("is-valid");
-    inputElement.classList.remove("is-invalid");
-  }
-}
-//*------------------> Validate URL <------------------*//
-function validateSiteUrlInput(inputElement) {
-  const regex = /^https:\/\/www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
-  if (!regex.test(inputElement.value.trim())) {
-    inputElement.classList.add("is-invalid");
-    inputElement.classList.remove("is-valid");
-  } else {
-    inputElement.classList.add("is-valid");
-    inputElement.classList.remove("is-invalid");
-  }
-}
+//*------------------> Real-time Validation <------------------*//
+siteNameInput.addEventListener("input", function () {
+  validateInput(this, validationRules.name);
+});
+siteUrlInput.addEventListener("input", function () {
+  validateInput(this, validationRules.url);
+});

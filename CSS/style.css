@@ -262,6 +262,22 @@ td button.delete-btn:hover {
 .box-conent .rules i {
   color: #bb4120;
 }
+.box-conent .rules li {
+  font-size: 18px;
+  padding-top: 10px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.box-conent .rules i {
+  color: #bb4120;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.box-conent .rules li span {
+  flex: 1;
+}
 
 .box-conent .box-header .circles span {
   display: block;
